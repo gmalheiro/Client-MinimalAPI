@@ -10,10 +10,7 @@ builder.Services.AddSwaggerGen();
 
 string dbConn = builder.Configuration.GetConnectionString("DbString");
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlServer(dbConn);
-});
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConn));
 
 var app = builder.Build();
 
