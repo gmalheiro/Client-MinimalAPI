@@ -1,4 +1,5 @@
 ﻿using ClientAPI.Context;
+using ClientAPI.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClientAPI.Endpoints
@@ -26,6 +27,19 @@ namespace ClientAPI.Endpoints
                     return Results.NotFound("Client not found");
 
                 return Results.Ok(client);
+
+            });
+
+            app.MapPost("/RegisterClient", async (Client client, AppDbContext db) =>
+            {
+
+                if (client is null)
+                    return Results.BadRequest("Client is null");
+
+                db.Clients?.AddAsync(client);
+                await db?.SaveChangesAsync()!;
+
+                return Results.Created($"/GetClientById/{client.Id}", client);
 
             });
 
