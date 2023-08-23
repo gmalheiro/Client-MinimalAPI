@@ -50,6 +50,21 @@ namespace ClientAPI.Endpoints
                 await db.SaveChangesAsync()!;
                 return Results.Ok(client);
             });
+
+            app.MapDelete("/DeleteClient/{id:int}", async (int id, AppDbContext db) =>
+            {
+                var client = await db.Clients!.FindAsync(id);
+
+                if (client is null)
+                    return Results.NotFound("Client not found");
+
+                db.Remove(client);
+                await db.SaveChangesAsync();
+
+                return Results.Ok(client);
+
+            });
+
         }
     }
 }
