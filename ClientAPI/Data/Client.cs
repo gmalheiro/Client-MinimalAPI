@@ -3,5 +3,23 @@
 namespace ClientAPI.Data
 {
     [Table("Client")]
-    public record Client(int Id, string Name, string Description);
+    public class Client
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+
+        public Client()
+        {
+            
+        }
+
+
+        public Client(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
+
+    }
 }
