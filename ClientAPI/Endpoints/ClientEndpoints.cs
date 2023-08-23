@@ -65,6 +65,19 @@ namespace ClientAPI.Endpoints
 
             });
 
+
+            app.MapPost("/CreateTenClients", async (AppDbContext db) =>
+            {
+                for (int i = 0; i <= 9; i++)
+                {
+                   string name =  await new HttpClient().GetStringAsync("https://gerador-nomes.wolan.net/nome");
+                   string description = await new HttpClient().GetStringAsync("https://ron-swanson-quotes.herokuapp.com/v2/quotes");
+                   Client client = new Client(name, description);
+                    db.Clients?.AddAsync(client);
+                }
+                await db.SaveChangesAsync();
+            });
+
         }
     }
 }
