@@ -1,4 +1,5 @@
 using ClientAPI.Context;
+using ClientAPI.Endpoints;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,5 +25,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapGet("/Teste", (string name) => { return Results.Ok($"Hello {name}"); });
+
+app.MapTarefasEndpoints();
 
 app.Run();
