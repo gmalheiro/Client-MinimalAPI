@@ -17,6 +17,18 @@ namespace ClientAPI.Endpoints
                 return Results.Ok(clients);
 
             } );
+
+            app.MapGet("/GetClientById/{id:int}", async (int id,AppDbContext db) =>
+            {
+                var client = await db.Clients!.FindAsync(id);
+
+                if (client is null)
+                    return Results.NotFound("Client not found");
+
+                return Results.Ok(client);
+
+            });
+
         }
     }
 }
