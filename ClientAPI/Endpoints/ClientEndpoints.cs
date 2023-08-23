@@ -32,17 +32,24 @@ namespace ClientAPI.Endpoints
 
             app.MapPost("/RegisterClient", async (Client client, AppDbContext db) =>
             {
-
                 if (client is null)
                     return Results.BadRequest("Client is null");
 
                 db.Clients?.AddAsync(client);
                 await db?.SaveChangesAsync()!;
-
                 return Results.Created($"/GetClientById/{client.Id}", client);
 
             });
 
+            app.MapPut("/EditClient/{id:int}", async (Client client,int id,AppDbContext db) =>
+            {
+                if (client.Id != id)
+                    return Results.NotFound("Client not found");
+
+                db.Entry(client).State = EntityState.Modified;
+                await db.SaveChangesAsync()!;
+                return Results.Ok(client);
+            });
         }
     }
 }
